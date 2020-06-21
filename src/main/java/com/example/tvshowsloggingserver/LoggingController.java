@@ -14,8 +14,9 @@ public class LoggingController {
     @PostMapping("/log")
     @CrossOrigin(origins = "http://localhost:3000")
     public void log(@RequestBody String log) {
-        String systemuser = System.getProperty("user.name");
+        Log logObject = new Log(log);
 
+        String systemuser = System.getProperty("user.name");
         String LOGS_PATH = "/home/"+systemuser+"/tvshows-logs";
 
         File uploadFolder = new File(LOGS_PATH);
@@ -26,7 +27,7 @@ public class LoggingController {
         try {
             PrintWriter out = new PrintWriter(LOGS_PATH+File.separator+
                     "tvshows-log-"+new java.util.Date()+".txt");
-            out.println(log);
+            out.println(logObject.toString());
             out.close();
         } catch (FileNotFoundException e) {}
     }
